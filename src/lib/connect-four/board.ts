@@ -4,9 +4,9 @@ import type { BoardGrid } from '@/types/connect-four/board'
 import type { DiscColor } from '@/types/connect-four/player'
 import type { Position } from '@/types/connect-four/game'
 
-export function createBoard(): BoardGrid {
-  return Array.from({ length: ROWS },
-    () => Array.from({ length: COLUMNS }, () => null),
+export function createBoard(rows = ROWS, columns = COLUMNS): BoardGrid {
+  return Array.from({ length: rows },
+    () => Array.from({ length: columns }, () => null),
   )
 }
 
