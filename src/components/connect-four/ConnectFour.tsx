@@ -6,6 +6,8 @@ import { useConnectFour } from '@/hooks/useConnectFour'
 export default function ConnectFour() {
   const {
     state,
+    lastAction,
+    moveId,
     playMove,
     undo,
     restart,
@@ -34,6 +36,11 @@ export default function ConnectFour() {
       ? state.players.find(p => p.id === state.currentPlayerId)!.color
       : state.players[0].color
 
+  const animatedMoveId
+    = lastAction === 'PLAY_MOVE'
+      ? moveId
+      : null
+
   return (
     <div className="mx-auto max-w-3xl px-4 lg:px-8 space-y-6">
       <GameHeader />
@@ -49,6 +56,8 @@ export default function ConnectFour() {
         board={state.board}
         currentPlayerColor={currentPlayerColor}
         winningPositions={winningPositions}
+        lastMove={state.moveHistory.at(-1)}
+        animatedMoveId={animatedMoveId}
         disabled={isGameOver}
         onColumnClick={playMove}
       />

@@ -63,8 +63,7 @@ export function makeMove(state: GameState, column: number): GameState {
       ...nextGameData,
       ...wonState,
     }
-  }
-  else if (isBoardFull(board)) {
+  } else if (isBoardFull(board)) {
     const drawState: DrawState = {
       status: 'draw',
     }
@@ -72,8 +71,7 @@ export function makeMove(state: GameState, column: number): GameState {
       ...nextGameData,
       ...drawState,
     }
-  }
-  else {
+  } else {
     const opponent = state.players.find(p => p.id !== currentPlayerId)
 
     if (!opponent) {

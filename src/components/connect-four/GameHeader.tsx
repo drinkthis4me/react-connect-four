@@ -6,6 +6,7 @@ export default function GameHeader() {
       <h1 className="text-3xl font-bold text-center dark:text-white">
         Connect Four
       </h1>
+
       <ThemeToggle />
     </div>
   )

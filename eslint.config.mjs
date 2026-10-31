@@ -27,7 +27,7 @@ export default defineConfig([
   stylistic.configs.recommended,
   {
     rules: {
-      '@stylistic/brace-style': ['error', '1tbs']
-    }
-  }
+      '@stylistic/brace-style': ['error', '1tbs'],
+    },
+  },
 ])
