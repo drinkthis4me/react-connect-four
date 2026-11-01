@@ -3,6 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.21.0"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^12.9.1"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
