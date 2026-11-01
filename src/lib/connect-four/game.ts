@@ -109,17 +109,3 @@ export function undoMove(state: GameState): GameState {
     currentPlayerId: lastMove.playerId,
   }
 }
-
-export function restartGame(
-  state: GameState,
-): GameState {
-  const board = createBoard()
-
-  return {
-    board,
-    players: state.players,
-    moveHistory: [],
-    status: 'playing',
-    currentPlayerId: state.players[0].id,
-  }
-}

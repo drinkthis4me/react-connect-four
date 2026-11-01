@@ -1,9 +1,17 @@
-import type { DiscColor } from '@/types/connect-four/player'
+import { useState } from 'react'
+import { useConnectFour } from '@/hooks/useConnectFour'
+import { INITIAL_PLAYERS } from '@/constants/connect-four/player'
 import GameBoard from './GameBoard'
 import GameHeader from './GameHeader'
-import { useConnectFour } from '@/hooks/useConnectFour'
+import GameControls from './GameControls'
+
+import type { DiscColor } from '@/types/connect-four/player'
+import type { AiDifficulty, GameConfig } from '@/types/connect-four/config'
 
 export default function ConnectFour() {
+  const [aiMode, setAiMode] = useState(false)
+  const [aiFirst, setAiFirst] = useState(false)
+  const [aiDifficulty, setAiDifficulty] = useState<AiDifficulty>(4)
   const {
     state,
     lastAction,
@@ -11,6 +19,7 @@ export default function ConnectFour() {
     playMove,
     undo,
     restart,
+    startNewGame,
   } = useConnectFour()
 
   const isGameOver = state.status !== 'playing'
@@ -41,11 +50,20 @@ export default function ConnectFour() {
       ? moveId
       : null
 
+  function handleNewGame() {
+    const newGameConfig: GameConfig = {
+      aiMode,
+      aiDifficulty,
+      aiFirst,
+      aiPlayerId: INITIAL_PLAYERS[aiFirst ? 0 : 1].id,
+    }
+    startNewGame(newGameConfig)
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-4 lg:px-8 space-y-6">
       <GameHeader />
 
-      {/* Game Info */}
       <div>
         <p className="text-center dark:text-white">
           {gameInfo}
@@ -62,23 +80,18 @@ export default function ConnectFour() {
         onColumnClick={playMove}
       />
 
-      {/* Game controls */}
-      <div className="flex justify-center gap-4">
-        <button
-          disabled={state.moveHistory.length === 0}
-          onClick={undo}
-          className="rounded bg-slate-200 px-4 py-2 disabled:opacity-50"
-        >
-          Undo
-        </button>
-
-        <button
-          onClick={restart}
-          className="rounded bg-blue-600 px-4 py-2 text-white"
-        >
-          Restart
-        </button>
-      </div>
+      <GameControls
+        undoDisabled={state.moveHistory.length === 0}
+        onUndo={undo}
+        onRestart={restart}
+        onNewGame={handleNewGame}
+        aiMode={aiMode}
+        onAiModeChange={setAiMode}
+        aiFirst={aiFirst}
+        onAiFirstChange={setAiFirst}
+        aiDifficulty={aiDifficulty}
+        onAiDifficultyChange={setAiDifficulty}
+      />
     </div>
   )
 }

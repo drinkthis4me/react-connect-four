@@ -3,7 +3,6 @@ import {
   createGame,
   makeMove,
   undoMove,
-  restartGame,
 } from './game'
 import { INITIAL_PLAYERS } from '@/constants/connect-four/player'
 
@@ -136,26 +135,6 @@ describe('game.ts', () => {
     it('should throw an error if history is empty when trying to undo', () => {
       const game = createGame()
       expect(() => undoMove(game)).toThrow('History is empty. Nothing to undo.')
-    })
-  })
-
-  describe('restartGame', () => {
-    it('should reset the board, clear history, and set turn back to the first player', () => {
-      let game = createGame()
-      game = makeMove(game, 0)
-      game = makeMove(game, 1)
-
-      expect(game.moveHistory.length).toBe(2)
-
-      const restartedState = restartGame(game)
-      if (restartedState.status !== 'playing') {
-        assert.fail('Expected game to be in playing state')
-      }
-
-      expect(restartedState.moveHistory).toEqual([])
-      expect(restartedState.status).toBe('playing')
-      expect(restartedState.currentPlayerId).toBe(INITIAL_PLAYERS[0].id)
-      expect(restartedState.board.every(row => row.every(cell => cell === null))).toBe(true)
     })
   })
 })
